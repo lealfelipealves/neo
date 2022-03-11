@@ -1,6 +1,24 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
+  margin-top: 1.5rem;
+  
+  button {
+    font-size: 1rem;
+    color: #FFF;
+    background: var(--blue);
+    border: 0;
+    padding: 0 2rem;
+    border-radius: 0.25rem;
+    height: 3rem;
+
+    transition: filter 0.2s;
+
+    &:hover {
+      filter: brightness(0.9);
+    }
+  }
+
   table {
     width: 100%;
     border-spacing: 0 0.5rem;

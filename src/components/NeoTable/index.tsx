@@ -83,6 +83,7 @@ export function NeoTable() {
   const [neo, setNeo] = useState<nearEarthObjects>();
   const [nearEarthObjects, setNearEarthObjects] = useState<nearObjects[]>();
 
+
   function getDateFormat(date: string) {
     const today = new Date(date);
     const formattedDate = format(today, "EEEE, dd 'de' MMMM 'de' yyyy", {
@@ -102,7 +103,21 @@ export function NeoTable() {
     })
   }
 
-  useEffect(() => {
+  function getDanger() {
+    api.get('neo/rest/v1/feed', { 
+      params: {
+        'start_date': '2015-09-08',
+        'end_date': '2015-09-08',
+        'api_key': process.env.REACT_APP_NASA_API_KEY
+      } 
+    })
+      .then((response) =>{
+        setNearEarthObjects(response.data.near_earth_objects['2015-09-08']
+        .filter((item: nearObjects) => item.is_potentially_hazardous_asteroid === true));	
+      })
+  }
+
+  /*useEffect(() => {
     api.get('neo/rest/v1/feed', { 
       params: {
         'start_date': '2022-01-01',
@@ -125,10 +140,16 @@ export function NeoTable() {
           })
         }
       })
-  }, []);
+  }, []);*/
 
   return (
     <Container>
+      <button
+        type="button"
+        onClick={() => getDanger()}
+      >
+        Listar Objetos de ameaça
+      </button>
       <table>
         <thead>
           <tr>
